@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/angular.js"></script>
+	</head>
+	<body>
+		<div ng-app="MyApp">
+			<div ng-controller="MyCtrl">
+				Country Filter: <input ng-model="filterCountryName">
+				<ul>
+					<li ng-repeat="country in countries | filter:{name: filterCountryName} | orderBy:'name' ">
+						<!-- $index, $first, $last, $middle, $even, $odd -->
+						{{country.name | uppercase}}
+						<ul>
+							<li ng-repeat="color in country.colors | orderBy:'toString()' ">
+								<!-- $index, $first, $last, $middle, $even, $odd -->
+								{{color}}
+							</li>
+						</ul>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl", function($scope) {
+
+					$scope.countries = [
+						{
+							name: "India",
+							colors: ["green","white","saffron"]
+						},
+						{
+							name: "Hungary",
+							colors: ["green","white","red"]
+						},
+						{
+							name: "Republic of Texas",
+							colors: ["red","white","blue"]
+						},
+						{
+							name: "United States",
+							colors: ["red","white","blue"]
+						}
+					];
+
+				});
+		</script>
+
+	</body>
+</html>

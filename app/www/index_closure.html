@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+	</head>
+	<body>
+		<script>
+			"use strict";
+
+			function myFunc() {
+
+				var x=2;
+
+				return function() {
+					console.log(x);
+				};
+
+			}
+
+			var f = myFunc();
+			f();
+			var g = myFunc();
+			g();
+
+
+		</script>
+	</body>
+</html>

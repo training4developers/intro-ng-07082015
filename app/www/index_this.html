@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+	</head>
+	<body>
+		<script>
+			//"use strict";
+
+			function myFunc() {
+
+				var that = this;
+
+				function myInnerFunc() {
+					console.dir(that);
+				}
+
+				myInnerFunc();
+			}
+
+			myFunc.call({ id: 5 });
+
+		</script>
+	</body>
+</html>

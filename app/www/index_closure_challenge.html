@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+	</head>
+	<body>
+		<script>
+			"use strict";
+
+			var x=0,y=0,funcs=[];
+
+			for (;x<5;x++) {
+				// HINT: IIFE
+				// 2nd HINT: assign x to a different variable
+				(function() {
+					var t = x;
+					funcs.push(function() {
+						console.log(t);
+					});
+
+				})();
+			}
+
+			for(;y<5;y++) {
+				funcs[y]();
+			}
+
+		</script>
+	</body>
+</html>

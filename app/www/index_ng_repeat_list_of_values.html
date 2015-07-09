@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/angular.js"></script>
+	</head>
+	<body>
+		<div ng-app="MyApp">
+			<div ng-controller="MyCtrl">
+				Color Filter: <input ng-model="filterColor">
+				New Color: <input ng-model="newColor">
+				<button ng-click="addColor()">Add Color</button>
+				<ul>
+					<li ng-repeat="color in colors | filter:filterColor | orderBy:'toString()' ">
+						<!-- $index, $first, $last, $middle, $even, $odd -->
+						{{$odd}} {{color}}
+					</li>
+				</ul>
+
+			</div>
+		</div>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl", function($scope) {
+					$scope.colors = ["red","white","blue",
+						"green","saffron","black","brown"];
+
+					$scope.addColor = function() {
+						$scope.colors.push($scope.newColor);
+						console.dir($scope);
+					};
+				});
+		</script>
+
+	</body>
+</html>

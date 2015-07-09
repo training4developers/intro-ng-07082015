@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+	</head>
+	<body>
+		<script>
+			"use strict";
+
+			var A = {
+				name: "Tamas",
+				country: {
+					name: "Hungary"
+				}
+			};
+
+			var B = Object.create(A);
+
+			console.log(Object.getPrototypeOf(B) === A);
+
+			console.dir(B);
+
+			A.name = "Karoly";
+			B.name = "Bob";
+			delete B.name;
+			B.country = {
+				name: "Bahamas"
+			};
+			console.log(B.country.name);
+
+
+		</script>
+	</body>
+</html>
