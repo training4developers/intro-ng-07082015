@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/angular.js"></script>
+	</head>
+	<body>
+		<div ng-app="MyApp">
+			<div ng-controller="MyCtrl">
+
+				<select
+					ng-model="selectedCountry"
+					ng-options="country.id as country.name group by
+						country.located for country in countries
+						| orderBy:'located':false">
+					<option value="">Select One...</option>
+				<select>
+
+				<div ng-switch on="selectedCountry">
+
+					<div ng-switch-when="1">
+						Hungary
+					</div>
+					<div ng-switch-when="2">
+						India
+					</div>
+					<div ng-switch-when="3">
+						USA
+					</div>
+					<div ng-switch-when="4">
+						United Kingdom
+					</div>
+					<div ng-switch-when="5">
+						China
+					</div>
+					<div ng-switch-default>
+						Select One...
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl", function($scope) {
+
+					$scope.countries = [
+						{ id: 1, name: "Hungary", capital: "Budapest", located: "Europe" },
+						{ id: 2, name: "India", capital: "New Delhi", located: "Asia" },
+						{ id: 3, name: "United States of America", capital: "Washington, D.C.", located: "North America" },
+						{ id: 4, name: "United Kingdom", capital: "London", located: "Europe" },
+						{ id: 5, name: "People's Republic of China", capital: "Beijing", located: "Asia" }
+					];
+
+				});
+
+		</script>
+	</body>
+</html>

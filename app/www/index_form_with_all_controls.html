@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/angular.js"></script>
+		<style>
+
+			/* input.ng-invalid.ng-dirty {
+				border: 3px red solid;
+			} */
+
+			.red-box {
+				border: 3px red solid;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div ng-app="MyApp">
+			<div ng-controller="MyCtrl">
+				<form name="contactForm" novalidate>
+
+					<div>
+						<label for="firstName">First Name:</label>
+						<input id="firstName" type="text"
+							name="firstName" required ng-model="person.firstName"
+							ng-class="{'red-box':contactForm.firstName.$invalid && contactForm.firstName.$dirty}">
+						<span ng-show="contactForm.firstName.$invalid">Please enter your first name!</span>
+					</div>
+
+					<div>
+						<label for="age">Age:</label>
+						<input id="age" type="number" name="age" ng-model="person.age">
+					</div>
+
+					<div>
+						<label for="isUSCitizen">US Citizen:</label>
+						<input id="isUSCitizen" type="checkbox" name="isUSCitizen" ng-model="person.isUSCitizen">
+					</div>
+
+					<div>
+						<label for="stateResidency">State of Residency:</label>
+						<select id="stateResidency" name="stateResidency"
+							ng-model="person.stateResidency"
+							ng-options="state as state for state in states">
+							<option value="">Select One...</option>
+						</select>
+					</div>
+
+					<div>
+						<fieldset>
+							<legend>Type of Account</legend>
+
+							<label for="typeOfAccountChecking">Checking:</label>
+							<input id="typeOfAccountChecking" type="radio"
+								name="typeOfAccount" ng-model="person.typeOfAccount" value="checking">
+
+							<label for="typeOfAccountSavings">Savings:</label>
+							<input id="typeOfAccountSavings" type="radio"
+								name="typeOfAccount" ng-model="person.typeOfAccount" value="savings">
+
+						</fieldset>
+					</div>
+
+					<div>
+						<label for="comments">Comments:</label>
+						<textarea id="comments" name="comments" rows="5" cols="60" ng-model="person.comments"></textarea>
+					</div>
+
+
+					<button type="button" ng-click="submitForm()">Submit</button>
+
+				</form>
+			</div>
+		</div>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl", function($scope) {
+
+					$scope.person = {
+						//typeOfAccount: "checking"
+					};
+
+					$scope.states = ["Oregon","Washington","Virginia"];
+
+					$scope.submitForm = function() {
+						console.dir($scope);
+					};
+
+				});
+
+		</script>
+	</body>
+</html>

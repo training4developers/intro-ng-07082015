@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/angular.js"></script>
+	</head>
+	<body>
+		<div ng-app="MyApp">
+
+			{{message}}<br><br>
+			<input ng-model="message">
+
+			<div ng-controller="MyCtrlA">
+				<div ng-controller="MyCtrlB">
+				</div>
+				<div ng-controller="MyCtrlB">
+				</div>
+				<div ng-controller="MyCtrlB">
+				</div>
+			</div>
+			<div ng-controller="MyCtrlA">
+			</div>
+			<div ng-controller="MyCtrlA">
+			</div>
+		</div>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrlA",	function ($scope, $rootScope, $timeout) {
+
+					$scope.$watch("message", function(newValue, oldValue) {
+						console.log("scope id: " + $scope.$id);
+						console.log("parent scope id: " + $scope.$parent.$id);
+						console.log("new value: " + newValue);
+						console.log("old value: " + oldValue);
+
+					});
+
+				})
+				.controller("MyCtrlB",	function ($scope, $rootScope, $timeout) {
+
+					$scope.$watch("message", function(newValue, oldValue) {
+						console.log("scope id: " + $scope.$id);
+						console.log("parent scope id: " + $scope.$parent.$id);
+						console.log("new value: " + newValue);
+						console.log("old value: " + oldValue);
+
+					});
+
+				});
+
+		</script>
+	</body>
+</html>

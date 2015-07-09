@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/angular.js"></script>
+		<style>
+
+			.red-box {
+				border:0px;
+				background-color:red;
+				width:200px;
+				height:200px;
+			}
+
+			.blue-box {
+				border:0px;
+				background-color:blue;
+				width:200px;
+				height:200px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div ng-app="MyApp">
+			<div ng-controller="MyCtrl">
+
+				<div>
+					<label for="show-red-box">Red Box</label>
+					<input id="show-red-box" ng-model="showRedBox" type="checkbox">
+				</div>
+				<div>
+					<label for="show-blue-box">Blue Box</label>
+					<input id="show-blue-box" ng-model="showBlueBox" type="checkbox">
+				</div>
+
+				<div ng-class="{ 'red-box': showRedBox, 'blue-box': showBlueBox }"></div>
+
+
+			</div>
+		</div>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl", function($scope) {
+
+				});
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/angular.js"></script>
+	</head>
+	<body>
+		<div ng-app="MyApp">
+			<div ng-controller="MyCtrl">
+
+				{{message}}<br><br>
+				<input ng-model="message">
+				<button ng-click="clickMe()">Click Me</button>
+
+			</div>
+		</div>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl",	function ($scope, $rootScope, $timeout) {
+
+					$scope.message = "Hi Everyone!";
+
+					$timeout(function() {
+						console.log("timeout expired...");
+						$scope.message = "Bye Everyone!";
+					}, 2000);
+
+					$scope.clickMe = function() {
+						$scope.message = "I was clicked!";
+						console.log("I was clicked!!!");
+					};
+
+					/*
+					setTimeout(function() {
+
+						$scope.$apply(function() {
+							console.log("timeout expired...");
+							$scope.message = "Bye Everyone!";
+							console.log($scope.message);
+						});
+					}, 2000);
+					*/
+
+				});
+
+		</script>
+	</body>
+</html>
