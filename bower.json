@@ -1,0 +1,23 @@
+{
+  "name": "usbank",
+  "version": "0.0.0",
+  "authors": [
+    "Eric W. Greene <eric@training4developers.com>"
+  ],
+  "license": "Apache 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.2",
+    "jquery": "~2.1.4",
+    "angular-route": "~1.4.2",
+    "angular-ui-router": "~0.2.15",
+    "angular-sanitize": "~1.4.2"
+  }
+}

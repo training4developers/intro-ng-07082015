@@ -1,0 +1,21 @@
+{
+  "name": "usbank",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eric W. Greene <eric@training4developers.com>",
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "q": "^1.4.1",
+    "sqlite3": "^3.0.8",
+    "ws": "^0.7.2"
+  }
+}

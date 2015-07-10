@@ -10,14 +10,9 @@
 		<div ng-app="MyApp">
 			<div ng-controller="MyCtrl">
 
-				<div ng-include=" 'tpl/first.tpl' "></div>
+				<!--<div ng-include=" 'tpl/first.tpl' "></div>-->
 
 				<div id="addContentHere"></div>
-
-				<ul>
-					<li ng-repeat="color in colors">{{color}}</li>
-				</ul>
-
 
 
 			</div>
@@ -27,11 +22,8 @@
 			angular.module("MyApp", [])
 				.controller("MyCtrl", function($scope, $timeout, $compile) {
 
-
-
 					$scope.message = "Hi Class!";
 
-					/*
 					$.ajax({
 						type: "GET",
 						url: "tpl/first.tpl",
@@ -43,10 +35,9 @@
 						var domElements = linkingFn($scope);
 
 						$("#addContentHere").html(domElements);
-
+						$scope.$digest();
 
 					});
-					*/
 
 				});
 
