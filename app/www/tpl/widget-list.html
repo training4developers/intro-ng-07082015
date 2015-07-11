@@ -1,0 +1,22 @@
+<button ng-click="refreshWidgets()">Refresh</button>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Color</th>
+			<th>Size</th>
+			<th>Quantity</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="widget in widgets">
+			<td><a ng-href='#/widget/{{widget.id}}'>{{widget.name | usbankUpperCase | usbankAppend:'!!!!'}}</a></td>
+			<td>{{widget.color}}</td>
+			<td>{{widget.size}}</td>
+			<td>{{widget.quantity}}</td>
+			<td><a ng-href="#/widget/{{widget.id}}/edit">Edit</a> | <a href ng-click="deleteWidget(widget.id)">Delete</td>
+		</tr>
+	</tbody>
+</table>
+<button ng-click="addWidget()">Add Widget</button>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Welcome to Angular.js!</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/angular.js"></script>
+	</head>
+	<body>
+		<div ng-app="MyApp">
+			<div ng-controller="MyCtrl">
+
+				<!--<div ng-include=" 'tpl/first.tpl' "></div>-->
+
+				<div id="addContentHere"></div>
+
+
+			</div>
+		</div>
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl", function($scope, $timeout, $compile) {
+
+					$scope.message = "Hi Class!";
+
+					$.ajax({
+						type: "GET",
+						url: "tpl/first.tpl",
+						dataType: "html"
+					}).done(function(result) {
+
+						var tpl = "<div>" + result + "</div>";
+						var linkingFn = $compile(tpl);
+						var domElements = linkingFn($scope);
+
+						$("#addContentHere").html(domElements);
+						$scope.$digest();
+
+					});
+
+				});
+
+		</script>
+	</body>
+</html>

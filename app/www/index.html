@@ -3,44 +3,191 @@
 <html>
 	<head>
 		<title>Welcome to Angular.js!</title>
-		<script src="js/jquery.js"></script>
-		<script src="js/angular.js"></script>
+		<script src="libs/jquery/dist/jquery.js"></script>
+		<script src="libs/angular/angular.js"></script>
+		<script src="libs/angular-route/angular-route.js"></script>
 	</head>
 	<body>
 		<div ng-app="MyApp">
-			<div ng-controller="MyCtrl">
-
-				<!--<div ng-include=" 'tpl/first.tpl' "></div>-->
-
-				<div id="addContentHere"></div>
-
-
-			</div>
+			<header>
+				<h1>My Widget App</h1>
+			</header>
+			<div ng-show="errorMessage">{{errorMessage}}</div>
+			<div ng-view></div>
+			<footer>
+				<small>Copyright 2015, US Bank, Inc.</small>
+			</footer>
 		</div>
 		<script>
 
-			angular.module("MyApp", [])
-				.controller("MyCtrl", function($scope, $timeout, $compile) {
+			angular.module("MyApp", ["ngRoute"])
+				.filter("usbankUpperCase", function() {
 
-					$scope.message = "Hi Class!";
+					return function(value) {
+						return String(value).toUpperCase();
+					};
 
-					$.ajax({
-						type: "GET",
-						url: "tpl/first.tpl",
-						dataType: "html"
-					}).done(function(result) {
+				})
+				.filter("usbankAppend", function() {
 
-						var tpl = "<div>" + result + "</div>";
-						var linkingFn = $compile(tpl);
-						var domElements = linkingFn($scope);
+					return function(value, strToAppend) {
+						return String(value) + String(strToAppend);
+					};
 
-						$("#addContentHere").html(domElements);
-						$scope.$digest();
+				})
+				.factory("WidgetData", function($http, $log) {
 
+					return {
+						getAll: function() {
+							return $http.get("/svc/widgets").catch(function(result) {
+								$log.error("data: " + result.data +
+									", status: " + result.status +
+									", statusText: " + result.statusText);
+								throw Error("Unable to download widgets.");
+								/*
+								return {
+									errorMessage: "Unable to download widgets."
+								};
+								*/
+							});
+						},
+						get: function(widgetId) {
+							return $http.get("/svc/widgets/" + encodeURIComponent(widgetId))
+						},
+						save: function(widget) {
+
+							if (widget.id) {
+								return $http.put("/svc/widgets/" + encodeURIComponent(widget.id), widget)
+							} else {
+								return $http.post("/svc/widgets", widget)
+							}
+
+						},
+						delete: function(widgetId) {
+							return $http.delete("/svc/widgets/" + encodeURIComponent(widgetId))
+						}
+					};
+
+				})
+				.controller("WidgetListCtrl", function($scope, widgets, WidgetData, $location, $rootScope) {
+
+					$scope.$on("$routeChangeError", function() {
+						window.alert("Unable to find widget!");
 					});
 
-				});
+					$scope.refreshWidgets = function() {
+						WidgetData.getAll().then(function(result) {
 
+							if (result.errorMessage) {
+								$rootScope.errorMessage = result.errorMessage;
+								$scope.widgets = [];
+							} else {
+								$scope.widgets = result.data;
+							}
+						}, function(result) {
+							$rootScope.errorMessage = result.message;
+							$scope.widgets = [];
+						});
+					};
+
+					$scope.deleteWidget = function(widgetId) {
+
+						if (!confirm("Are you sure you want to delete this widget?")) {
+							return;
+						}
+
+						WidgetData.delete(widgetId).then(function(result) {
+							$scope.refreshWidgets();
+						});
+
+					};
+
+					$scope.addWidget = function() {
+						$location.path("/widget//edit");
+					};
+
+					$scope.widgets = widgets.data;
+					//$scope.refreshWidgets();
+
+				})
+				.controller("WidgetViewCtrl", function($scope, widget, WidgetData, $routeParams, $location) {
+
+					$scope.widget = widget.data;
+
+					/*
+					WidgetData.get($routeParams.widgetId).then(function(result) {
+						$scope.widget = result.data;
+					});
+					*/
+
+					$scope.returnToList = function() {
+						$location.path("/");
+					}
+
+				})
+				.controller("WidgetEditCtrl", function($scope, widget, WidgetData, $routeParams, $location) {
+
+					//$scope.widget = {};
+
+					$scope.widget = widget.data;
+
+					/*
+					if ($routeParams.widgetId) {
+						WidgetData.get($routeParams.widgetId).then(function(result) {
+							$scope.widget = result.data;
+						});
+					}
+					*/
+
+					$scope.saveWidget = function() {
+
+						WidgetData.save($scope.widget).then(function(result) {
+							$location.path("/");
+						});
+
+					};
+
+					$scope.cancelChanges = function() {
+						$location.path("/");
+					}
+
+				})
+				.config(function($routeProvider) {
+
+					$routeProvider
+						.when("/", {
+							controller: "WidgetListCtrl",
+							templateUrl: "tpl/widget-list.html",
+							resolve: {
+								widgets: function(WidgetData) {
+									return WidgetData.getAll();
+								}
+							}
+						})
+						.when("/widget/:widgetId", {
+							controller: "WidgetViewCtrl",
+							templateUrl: "tpl/widget-view.html",
+							resolve: {
+								widget: function(WidgetData, $route) {
+									return WidgetData.get($route.current.params.widgetId);
+								}
+							}
+						})
+						.when("/widget/:widgetId?/edit", {
+							controller: "WidgetEditCtrl",
+							templateUrl: "tpl/widget-edit.html",
+							resolve: {
+								widget: function(WidgetData, $route) {
+									if ($route.current.params.widgetId) {
+										return WidgetData.get($route.current.params.widgetId);
+									} else {
+										return {};
+									}
+								}
+							}
+						});
+
+				});
 		</script>
 	</body>
 </html>

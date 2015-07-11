@@ -1,0 +1,24 @@
+<form name="widgetForm" novalidate>
+<div>
+	<label for="widget-name">Name:</label>
+	<input id="widget-name" name="widget-name" ng-model="widget.name">
+</div>
+<div>
+	<label for="widget-description">Description:</label>
+	<input id="widget-description" name="widget-description" ng-model="widget.description">
+</div>
+<div>
+	<label for="widget-color">Color:</label>
+	<input id="widget-color" name="widget-color" ng-model="widget.color">
+</div>
+<div>
+	<label for="widget-size">Size:</label>
+	<input id="widget-size" name="widget-size" ng-model="widget.size">
+</div>
+<div>
+	<label for="widget-quantity">Quantity:</label>
+	<input id="widget-quantity" name="widget-quantity" ng-model="widget.quantity">
+</div>
+<button ng-click="saveWidget()">Save Widget</button>
+<button ng-click="cancelChanges()">Cancel Changes</button>
+</form>
